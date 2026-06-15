@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>教室脱出ゲーム</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="start-screen" class="screen">
+    <h1>教室脱出ゲーム</h1>
+
+    <input id="teamName" placeholder="チーム名">
+
+    <button onclick="startGame()">
+        ゲーム開始
+    </button>
+</div>
+
+<div id="game-screen" class="screen hidden">
+
+    <header>
+        <h2 id="teamLabel"></h2>
+        <div id="timer">45:00</div>
+    </header>
+
+    <section class="mission">
+        <h3>現在の目標</h3>
+        <p>QRコードを探して解析しよう</p>
+    </section>
+
+    <section class="status">
+        <div>アイテム: <span id="itemCount">0</span></div>
+        <div>情報: <span id="infoCount">0</span></div>
+    </section>
+
+    <section class="buttons">
+        <button onclick="scanQR()">QR読取</button>
+        <button onclick="showItems()">アイテム</button>
+        <button onclick="showInfos()">情報</button>
+        <button onclick="showPuzzle()">問題</button>
+    </section>
+
+    <div id="content"></div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
