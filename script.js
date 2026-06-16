@@ -3,16 +3,12 @@ let infos = [];
 
 function startGame(){
 
-    const name =
-        document.getElementById("teamName").value;
-
-    document.getElementById("teamLabel")
-        .innerText = name;
-
-    document.getElementById("start-screen")
+    document
+        .getElementById("startScreen")
         .classList.add("hidden");
 
-    document.getElementById("game-screen")
+    document
+        .getElementById("gameScreen")
         .classList.remove("hidden");
 
     startTimer();
@@ -24,15 +20,16 @@ function startTimer(){
 
     setInterval(() => {
 
-        let m =
+        let min =
             Math.floor(time / 60);
 
-        let s =
+        let sec =
             time % 60;
 
-        document.getElementById("timer")
+        document
+            .getElementById("timer")
             .innerText =
-            `${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`;
+            `${String(min).padStart(2,'0')}:${String(sec).padStart(2,'0')}`;
 
         time--;
 
@@ -45,8 +42,9 @@ function scanQR(){
         document.getElementById("content");
 
     content.innerHTML = `
-        <div class="event">
-            <h3>解析中...</h3>
+        <div class="success">
+            <h2>SCANNING...</h2>
+            <div class="loader"></div>
         </div>
     `;
 
@@ -55,46 +53,76 @@ function scanQR(){
         items.push("USBメモリ");
         infos.push("管理者ログ");
 
-        document.getElementById("itemCount")
-            .innerText = items.length;
-
-        document.getElementById("infoCount")
-            .innerText = infos.length;
+        updateStatus();
 
         content.innerHTML = `
-            <div class="event">
-                <h2>取得成功！</h2>
-                <p>USBメモリを入手</p>
-                <p>管理者ログを入手</p>
+            <div class="success">
+                <h1>ACCESS GRANTED</h1>
+
+                <p>USBメモリ取得</p>
+                <p>管理者ログ取得</p>
             </div>
         `;
 
-    },1500);
+    },2000);
+}
+
+function updateStatus(){
+
+    document
+        .getElementById("itemCount")
+        .innerText =
+        items.length;
+
+    document
+        .getElementById("infoCount")
+        .innerText =
+        infos.length;
 }
 
 function showItems(){
 
-    document.getElementById("content")
-        .innerHTML =
-        "<h3>アイテム一覧</h3>" +
-        items.map(x=>`<p>${x}</p>`).join("");
+    let html =
+        "<h2>ITEM LIST</h2>";
+
+    items.forEach(item => {
+
+        html += `<p>▶ ${item}</p>`;
+    });
+
+    document
+        .getElementById("content")
+        .innerHTML = html;
 }
 
 function showInfos(){
 
-    document.getElementById("content")
-        .innerHTML =
-        "<h3>情報一覧</h3>" +
-        infos.map(x=>`<p>${x}</p>`).join("");
+    let html =
+        "<h2>DATA LIST</h2>";
+
+    infos.forEach(info => {
+
+        html += `<p>▶ ${info}</p>`;
+    });
+
+    document
+        .getElementById("content")
+        .innerHTML = html;
 }
 
 function showPuzzle(){
 
-    document.getElementById("content")
+    document
+        .getElementById("content")
         .innerHTML = `
-        <h3>認証コード入力</h3>
 
-        <input id="answer">
+        <h2>認証コード入力</h2>
+
+        <input
+            id="answer"
+            placeholder="コードを入力">
+
+        <br><br>
 
         <button onclick="checkAnswer()">
             送信
@@ -105,23 +133,33 @@ function showPuzzle(){
 function checkAnswer(){
 
     const answer =
-        document.getElementById("answer").value;
+        document
+        .getElementById("answer")
+        .value;
 
     if(answer === "1234"){
 
-        document.getElementById("content")
+        document
+            .getElementById("content")
             .innerHTML = `
-            <h1>
-                SYSTEM SHUTDOWN
-            </h1>
 
-            <h2>
+            <div class="success">
+
+                <h1>
+                SYSTEM SHUTDOWN
+                </h1>
+
+                <br>
+
+                <h2>
                 脱出成功
-            </h2>
+                </h2>
+
+            </div>
             `;
 
     }else{
 
-        alert("不正解");
+        alert("認証失敗");
     }
 }

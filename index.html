@@ -2,49 +2,101 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>教室脱出ゲーム</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESCAPE SYSTEM</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div id="start-screen" class="screen">
-    <h1>教室脱出ゲーム</h1>
+<div id="startScreen" class="start-screen">
 
-    <input id="teamName" placeholder="チーム名">
+    <div class="logo">
+        ESCAPE SYSTEM
+    </div>
+
+    <p>暴走したシステムを停止せよ</p>
+
+    <input
+        id="teamName"
+        type="text"
+        placeholder="チーム名を入力">
 
     <button onclick="startGame()">
-        ゲーム開始
+        GAME START
     </button>
+
 </div>
 
-<div id="game-screen" class="screen hidden">
+<div id="gameScreen" class="phone hidden">
 
-    <header>
-        <h2 id="teamLabel"></h2>
-        <div id="timer">45:00</div>
-    </header>
+    <div class="header">
+        ESCAPE SYSTEM
+    </div>
 
-    <section class="mission">
-        <h3>現在の目標</h3>
-        <p>QRコードを探して解析しよう</p>
-    </section>
+    <div class="timer-card">
+        <span>TIME LEFT</span>
+        <h1 id="timer">45:00</h1>
+    </div>
 
-    <section class="status">
-        <div>アイテム: <span id="itemCount">0</span></div>
-        <div>情報: <span id="infoCount">0</span></div>
-    </section>
+    <div class="mission-card">
+        <h3>MISSION</h3>
+        <p id="missionText">
+            QRコードを探して解析せよ
+        </p>
+    </div>
 
-    <section class="buttons">
-        <button onclick="scanQR()">QR読取</button>
-        <button onclick="showItems()">アイテム</button>
-        <button onclick="showInfos()">情報</button>
-        <button onclick="showPuzzle()">問題</button>
-    </section>
+    <div class="status-card">
 
-    <div id="content"></div>
+        <div>
+            <span>ITEMS</span>
+            <h2 id="itemCount">0</h2>
+        </div>
+
+        <div>
+            <span>DATA</span>
+            <h2 id="infoCount">0</h2>
+        </div>
+
+    </div>
+
+    <div id="content" class="content">
+
+        <div class="welcome">
+
+            <h2>ようこそ</h2>
+
+            <p>
+                教室内を探索し、
+                システム停止コードを探してください。
+            </p>
+
+        </div>
+
+    </div>
+
+    <div class="bottom-nav">
+
+        <button onclick="scanQR()">
+            QR
+        </button>
+
+        <button onclick="showItems()">
+            ITEM
+        </button>
+
+        <button onclick="showInfos()">
+            DATA
+        </button>
+
+        <button onclick="showPuzzle()">
+            CODE
+        </button>
+
+    </div>
 
 </div>
 
 <script src="script.js"></script>
+
 </body>
 </html>
