@@ -1,102 +1,66 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ESCAPE SYSTEM</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>教室脱出ゲーム</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
+<div id="app">
+  <div id="screen-title" class="screen active">
+    <h1>教室脱出ゲーム</h1>
+    <button onclick="show('screen-team')">ゲームスタート</button>
+  </div>
 
-<div id="startScreen" class="start-screen">
+  <div id="screen-team" class="screen">
+    <h2>チーム登録</h2>
+    <input id="teamName" placeholder="チーム名">
+    <button onclick="startGame()">スタート</button>
+  </div>
 
-    <div class="logo">
-        ESCAPE SYSTEM
+  <div id="screen-main" class="screen">
+    <div class="card">
+      <div>残り時間</div>
+      <div id="timer">45:00</div>
     </div>
+    <div class="card">
+      <h3>現在のミッション</h3>
+      <p>謎を解いてAIを停止させろ</p>
+    </div>
+    <div class="nav">
+      <button onclick="openModal('qr')">QR</button>
+      <button onclick="openModal('info')">情報</button>
+      <button onclick="openModal('item')">アイテム</button>
+      <button onclick="openModal('hint')">ヒント</button>
+    </div>
+    <button onclick="show('screen-problem')">問題へ</button>
+  </div>
 
-    <p>暴走したシステムを停止せよ</p>
+  <div id="screen-problem" class="screen">
+    <h2>問題 2/5</h2>
+    <p>暗号化されたメッセージを解読し答えを導け</p>
+    <button onclick="show('screen-answer')">次へ</button>
+  </div>
 
-    <input
-        id="teamName"
-        type="text"
-        placeholder="チーム名を入力">
+  <div id="screen-answer" class="screen">
+    <h2>答えを入力してください</h2>
+    <input id="answer">
+    <button onclick="checkAnswer()">回答する</button>
+  </div>
 
-    <button onclick="startGame()">
-        GAME START
-    </button>
+  <div id="screen-clear" class="screen">
+    <h1>脱出成功！</h1>
+  </div>
 
+  <div id="screen-over" class="screen">
+    <h1>TIME OVER</h1>
+  </div>
+
+  <div id="modal" class="modal hidden">
+    <div class="modal-body" id="modalContent"></div>
+  </div>
 </div>
-
-<div id="gameScreen" class="phone hidden">
-
-    <div class="header">
-        ESCAPE SYSTEM
-    </div>
-
-    <div class="timer-card">
-        <span>TIME LEFT</span>
-        <h1 id="timer">45:00</h1>
-    </div>
-
-    <div class="mission-card">
-        <h3>MISSION</h3>
-        <p id="missionText">
-            QRコードを探して解析せよ
-        </p>
-    </div>
-
-    <div class="status-card">
-
-        <div>
-            <span>ITEMS</span>
-            <h2 id="itemCount">0</h2>
-        </div>
-
-        <div>
-            <span>DATA</span>
-            <h2 id="infoCount">0</h2>
-        </div>
-
-    </div>
-
-    <div id="content" class="content">
-
-        <div class="welcome">
-
-            <h2>ようこそ</h2>
-
-            <p>
-                教室内を探索し、
-                システム停止コードを探してください。
-            </p>
-
-        </div>
-
-    </div>
-
-    <div class="bottom-nav">
-
-        <button onclick="scanQR()">
-            QR
-        </button>
-
-        <button onclick="showItems()">
-            ITEM
-        </button>
-
-        <button onclick="showInfos()">
-            DATA
-        </button>
-
-        <button onclick="showPuzzle()">
-            CODE
-        </button>
-
-    </div>
-
-</div>
-
 <script src="script.js"></script>
-
 </body>
 </html>
