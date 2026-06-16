@@ -1,165 +1,135 @@
-let items = [];
-let infos = [];
+function show(id){
+    document.querySelectorAll('.screen').forEach(s =>
+        s.classList.remove('active')
+    );
+
+    document.getElementById(id)
+        .classList.add('active');
+}
 
 function startGame(){
 
-    document
-        .getElementById("startScreen")
-        .classList.add("hidden");
-
-    document
-        .getElementById("gameScreen")
-        .classList.remove("hidden");
+    show('screen-main');
 
     startTimer();
 }
 
+let started = false;
+
 function startTimer(){
 
-    let time = 2700;
+    if(started) return;
+
+    started = true;
+
+    let t = 2700;
 
     setInterval(() => {
 
-        let min =
-            Math.floor(time / 60);
+        let m = Math.floor(t / 60);
+        let s = t % 60;
 
-        let sec =
-            time % 60;
+        document.getElementById('timer')
+            .textContent =
+            String(m).padStart(2,'0')
+            + ':'
+            + String(s).padStart(2,'0');
 
-        document
-            .getElementById("timer")
-            .innerText =
-            `${String(min).padStart(2,'0')}:${String(sec).padStart(2,'0')}`;
+        if(t <= 0){
 
-        time--;
+            show('screen-over');
+        }
+
+        t--;
 
     },1000);
 }
 
-function scanQR(){
+function openModal(type){
+
+    const modal =
+        document.getElementById('modal');
 
     const content =
-        document.getElementById("content");
+        document.getElementById('modalContent');
 
-    content.innerHTML = `
-        <div class="success">
-            <h2>SCANNING...</h2>
-            <div class="loader"></div>
-        </div>
-    `;
-
-    setTimeout(() => {
-
-        items.push("USBメモリ");
-        infos.push("管理者ログ");
-
-        updateStatus();
+    if(type === 'qr'){
 
         content.innerHTML = `
-            <div class="success">
-                <h1>ACCESS GRANTED</h1>
+            <h3>QRコード読取画面</h3>
+            <p>QRコードを読み取ってください</p>
 
-                <p>USBメモリ取得</p>
-                <p>管理者ログ取得</p>
-            </div>
+            <button onclick="closeModal()">
+                閉じる
+            </button>
         `;
+    }
 
-    },2000);
-}
+    if(type === 'info'){
 
-function updateStatus(){
+        content.innerHTML = `
+            <h3>取得情報</h3>
 
-    document
-        .getElementById("itemCount")
-        .innerText =
-        items.length;
+            <ul>
+                <li>メモ</li>
+                <li>サーバーログ</li>
+            </ul>
 
-    document
-        .getElementById("infoCount")
-        .innerText =
-        infos.length;
-}
-
-function showItems(){
-
-    let html =
-        "<h2>ITEM LIST</h2>";
-
-    items.forEach(item => {
-
-        html += `<p>▶ ${item}</p>`;
-    });
-
-    document
-        .getElementById("content")
-        .innerHTML = html;
-}
-
-function showInfos(){
-
-    let html =
-        "<h2>DATA LIST</h2>";
-
-    infos.forEach(info => {
-
-        html += `<p>▶ ${info}</p>`;
-    });
-
-    document
-        .getElementById("content")
-        .innerHTML = html;
-}
-
-function showPuzzle(){
-
-    document
-        .getElementById("content")
-        .innerHTML = `
-
-        <h2>認証コード入力</h2>
-
-        <input
-            id="answer"
-            placeholder="コードを入力">
-
-        <br><br>
-
-        <button onclick="checkAnswer()">
-            送信
-        </button>
+            <button onclick="closeModal()">
+                閉じる
+            </button>
         `;
+    }
+
+    if(type === 'item'){
+
+        content.innerHTML = `
+            <h3>アイテム一覧</h3>
+
+            <ul>
+                <li>USBメモリ</li>
+                <li>鍵</li>
+            </ul>
+
+            <button onclick="closeModal()">
+                閉じる
+            </button>
+        `;
+    }
+
+    if(type === 'hint'){
+
+        content.innerHTML = `
+            <h3>ヒント</h3>
+
+            <p>残り2回</p>
+
+            <button onclick="closeModal()">
+                閉じる
+            </button>
+        `;
+    }
+
+    modal.classList.remove('hidden');
+}
+
+function closeModal(){
+
+    document.getElementById('modal')
+        .classList.add('hidden');
 }
 
 function checkAnswer(){
 
     const answer =
-        document
-        .getElementById("answer")
-        .value;
+        document.getElementById('answer').value;
 
-    if(answer === "1234"){
+    if(answer === '1234'){
 
-        document
-            .getElementById("content")
-            .innerHTML = `
+        show('screen-clear');
+    }
+    else{
 
-            <div class="success">
-
-                <h1>
-                SYSTEM SHUTDOWN
-                </h1>
-
-                <br>
-
-                <h2>
-                脱出成功
-                </h2>
-
-            </div>
-            `;
-
-    }else{
-
-        alert("認証失敗");
+        alert('不正解');
     }
 }
